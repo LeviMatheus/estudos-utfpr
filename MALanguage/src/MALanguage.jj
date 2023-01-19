@@ -1,0 +1,156 @@
+/**
+ * JavaCC template file created by SF JavaCC plugin 1.5.28+ wizard for JavaCC 1.5.0+
+ */
+
+/*
+	TODO: implementar funções do sistema e declaração de funções do usuário, laço de repetição, documentação (programas válidas e inválidos)
+	IDEIAS: BYAKUGAN = OLHO QUE TUDO VE = IF
+			SHARINGAN = OLHO DA PERCEPCAO = TRYCATCH
+			
+*/
+options{  static = true;}PARSER_BEGIN(MALanguage)
+public class MALanguage{  public static void main(String args []) throws ParseException  {    MALanguage parser = new MALanguage(System.in);    while (true)    {      System.out.println("ikimasho: \n");      try      {
+       	parser.principal();
+      }      catch (Exception e)      {        System.out.println("chotto matte.");        System.out.println(e.getMessage());        MALanguage.ReInit(System.in);      }      catch (Error e)      {        System.out.println("yamerooo.");        System.out.println(e.getMessage());        break;      }    }  }}PARSER_END(MALanguage)SKIP :{  " "| "\r"| "\t"| "\n"}TOKEN : /* OPERATORS */
+{
+  < INICIOPROGRAMA    : "omaewamoushindeiru" | "zawarudo" | "sasageyo">
+| < FIMPROGRAMA        : "naniii" | "roadrollerda">
+| < INICIOBLOCO     : "smaaash" >
+| < FIMBLOCO        : "ussmaaash" >
+| < REAL            : "yandere" >
+| < BOOLEAN 		: "kuudere" >
+| < INTEIRO         : "deredere" >
+| < LETRA            : "tsuntsun" >
+| < STRING           : "tsundere" >
+| < FIMINSTRUCAO     : ("desu") >
+| < DIGITO            : ["0"-"9"] >
+| < CARACTERE        : (["A"-"Z"] | ["a"-"z"]) >
+| < ATRIBUICAO        : "=" >
+| < SEPARADOR        : "," >
+| < IDENTIFICADOR    : "tuturu_"(<CARACTERE>|<DIGITO>)+ >
+| < IF				: "moemoe" >
+| < ELSE			: "kyun" >
+| < LPAR			: "(" >
+| < RPAR			: ")" >
+| < DECIMAL 		: "." >
+| < OPERADOR_LOGICO		: "<" | ">" | "==" | "&" | "ou">
+| < OPERADOR_ARITMETICO : "+" | "-" | "*" | "/" >
+| < FOR : "steins" > /* de steins gate, iterar entre as varias realidades */
+| < FUNC : "bankai_"(<CARACTERE>|<DIGITO>)+ >
+| < WHILE : "ayaya" >
+| < ISTRING : "'" >
+| < INTERRUPCAO : "yamero" >
+| < TRUE 		: "redonda" >
+| < FALSE		: "plana" >
+}
+void principal() :
+{}
+{
+  < INICIOPROGRAMA >
+  < INICIOBLOCO >
+  (comandos())*
+  < FIMBLOCO >
+  < FIMPROGRAMA >
+}
+
+void comandos():
+{}
+{
+  //comandos
+	condicional() | declaracaoVariavel() | repeticao() | function()  | stmt()
+}
+
+void function():
+{}
+{
+    < FUNC > < LPAR > ( (< IDENTIFICADOR > | dado()) (< SEPARADOR > (< IDENTIFICADOR > | dado()))* )* < RPAR > < FIMINSTRUCAO >
+}
+
+void stmt()://statement
+{}
+{
+	expressao() < FIMINSTRUCAO > 
+}
+
+void condicional():
+{}
+{
+	< IF > < LPAR > expressao() < RPAR >
+	< INICIOBLOCO >
+		//LOOKAHEAD(1) 
+		(declaracaoVariavel() | repeticao() /*| stmt() */ )*
+	< FIMBLOCO >
+	(		< ELSE >
+		< INICIOBLOCO >
+			//LOOKAHEAD(1)
+			(declaracaoVariavel() | repeticao() /*| stmt() */)*
+		< FIMBLOCO >
+	)?
+}
+
+void repeticao():
+{}
+{
+  	/* EXEMPLO
+  	steins(a<0 gate a++) {
+  	  comandos
+    }
+    */
+	(		< FOR > < LPAR > (numero()|< IDENTIFICADOR >) < RPAR >
+		(		 	< INICIOBLOCO >
+		 		(		 		  comandos()
+		 		)*
+			< FIMBLOCO >
+		)?
+	)|//ou
+	(
+		< WHILE > < LPAR > (expressao())? <RPAR > /* se vazio == true */
+	    <INICIOBLOCO >
+	    	(
+	    	  comandos()	    	)*
+		< FIMBLOCO >	)
+}
+
+void expressao():
+{}
+{ 
+  	(  	  (numero() | < IDENTIFICADOR >) (< OPERADOR_LOGICO > | < OPERADOR_ARITMETICO >) (numero() | < IDENTIFICADOR >)
+  	)
+}
+
+void declaracaoVariavel():
+{}
+{
+  	/* atribuicao basica, tipo, int a = 2;  */
+	tipoDado() <IDENTIFICADOR > (< ATRIBUICAO > ( < CARACTERE >| numero() ) )? (< SEPARADOR > < IDENTIFICADOR > (< ATRIBUICAO > ( < CARACTERE >|numero()) )?)* <FIMINSTRUCAO >
+}
+
+void string(): 
+{}
+{
+	(< ISTRING >)(< CARACTERE > | < DIGITO >)*(< ISTRING >)
+}
+
+void numero():
+{}
+{
+	(< DIGITO >)+ (< DECIMAL > (< DIGITO >)+ )?
+}
+
+void bool():
+{}
+{
+	< TRUE > | < FALSE >
+}
+
+void dado():
+{}
+{
+  	(numero() | string() | bool())
+}
+
+void tipoDado():
+{}
+{
+	< REAL >|< INTEIRO >|< LETRA >|< STRING >|< BOOLEAN >
+}

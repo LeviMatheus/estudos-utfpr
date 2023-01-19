@@ -1,0 +1,264 @@
+/**
+ * JavaCC template file created by SF JavaCC plugin 1.5.28+ wizard for JavaCC 1.5.0+
+ */
+
+/*
+	TODO: implementar funï¿½ï¿½es do sistema e declaraï¿½ï¿½o de funï¿½ï¿½es do usuï¿½rio, laï¿½o de repetiï¿½ï¿½o, documentaï¿½ï¿½o (programas vï¿½lidas e invï¿½lidos)
+	IDEIAS: BYAKUGAN = OLHO QUE TUDO VE = IF
+			SHARINGAN = OLHO DA PERCEPCAO = TRYCATCH
+			
+*/
+
+options
+{
+  static = true;
+}
+
+PARSER_BEGIN(MALanguage)
+package parser;
+import recovery.*;
+
+public class MALanguage
+{
+	public static void main(String args []) throws ParseException
+ 	{
+		MALanguage parser = new MALanguage(System.in);
+		while (true)
+		{
+		  System.out.println("ikimasho: \n");
+		  try
+		  {
+		  	SimpleNode n = parser.principal();
+		  	n.dump(" ", window);
+		  }
+		  catch (Exception e)
+		  {
+		    System.out.println("chotto matte.");
+		    System.out.println(e.getMessage());
+		    MALanguage.ReInit(System.in);
+		  }
+		  catch (Error e)
+		  {
+		    System.out.println("yamerooo.");
+		    System.out.println(e.getMessage());
+		    break;
+		  }
+		}
+	}
+	static public String im(int x)
+  	{
+	    int k;
+		String s;
+	    s = tokenImage[x];
+	    k = s.lastIndexOf("\"");
+	    try {
+	      s = s.substring(1,k);
+	    }
+	   catch (StringIndexOutOfBoundsException e)
+		   {}
+	   return s;
+  	}
+	
+  	static Token lastError = null;
+  	static boolean eof;    // variável que indica se EOF foi alcançado
+	
+  	// o método abaixo consome tokens até alcançar um que pertença ao conjunto
+  	// de sincronização
+  	static void consumeUntil(RecoverySet g,
+	                 ParseException e,
+	                 String met) throws ParseEOFException,
+	                                    ParseException
+  {
+	Token tok;
+	System.out.println();
+	System.out.println("*** " + met + " ***");
+	System.out.println("     Conjunto de sincronização: " + g);
+		
+	if (g == null) throw e; // se o conjunto é null, propaga a exceção
+	
+	tok = getToken(1); // pega token corrente
+	while ( ! eof )	{ // se não chegou ao fim do arquivo
+	  if ( g.contains(tok.kind)) {//achou um token no conjunto
+	    System.out.println("     Encontrado token de sincronização: " + 
+	                       im(tok.kind));
+	    break;
+	  }
+	  System.out.println("     Ignorando o token: " + im(tok.kind));
+	  getNextToken();     // pega próximo token       
+      tok = getToken(1);
+	  if (tok.kind == EOF && ! g.contains(EOF) ) // fim da entrada?   
+	      eof = true;
+	}
+    if ( tok != lastError)  {
+	  System.out.println(e.getMessage());
+	  lastError = tok;
+	   
+	}
+	if ( eof )
+	  throw new ParseEOFException("Encontrei EOF onde não deveria.");
+  	}
+}
+
+PARSER_END(MALanguage)
+
+SKIP :
+{
+  " "
+| "\r"
+| "\t"
+| "\n"
+}
+
+TOKEN : /* OPERATORS */
+{
+  < INICIOPROGRAMA    : "omaewamoushindeiru" | "zawarudo" | "sasageyo">
+| < FIMPROGRAMA        : "naniii" | "roadrollerda">
+| < INICIOBLOCO     : "smaaash" >
+| < FIMBLOCO        : "ussmaaash" | "californiasmaaash" | "carolinasmaaash" | "detroitsmaaash" | "doubledetroitsmaaash"
+| "missourismaaash" | "nebraskasmaaash" | "newhampshiresmaaash" | "oklahomasmaaash" | "texassmaaash" >
+| < REAL            : "yandere" >
+| < BOOLEAN 		: "kuudere" >
+| < INTEIRO         : "deredere" >
+| < LETRA            : "tsuntsun" >
+| < STRING           : "tsundere" >
+| < FIMINSTRUCAO     : ("desu") >
+| < DIGITO            : ["0"-"9"] >
+| < CARACTERE        : (["A"-"Z"] | ["a"-"z"]) >
+| < ATRIBUICAO        : "=" >
+| < SEPARADOR        : "," >
+| < IDENTIFICADOR    : "tuturu_"(<CARACTERE>|<DIGITO>)+ >
+| < IF				: "moemoe" >
+| < ELSE			: "kyun" >
+| < LPAR			: "(" >
+| < RPAR			: ")" >
+| < DECIMAL 		: "." >
+| < OPERADOR_LOGICO		: "<" | ">" | "==" | "&" | "ou">
+| < OPERADOR_ARITMETICO : "+" | "-" | "*" | "/" >
+| < FOR : "steins" > 
+| < FUNCTION : "bankai_"(<CARACTERE>|<DIGITO>)+ >
+| < WHILE : "ayaya" >
+| < ISTRING : "'" >
+| < INTERRUPCAO : "yamero" >
+| < TRUE 		: "redonda" >
+| < FALSE		: "plana" >
+}
+
+void principal() :
+{}
+{
+	< INICIOPROGRAMA >
+  	< INICIOBLOCO >
+  	(comandos())*
+  	< FIMBLOCO >
+  	< FIMPROGRAMA > 
+}
+
+void comandos():
+{}
+{
+  //comandos
+	condicional() | declaracaoVariavel() | repeticao() | function()  | stmt()
+}
+
+void function():
+{}
+{
+	< FUNCTION > < LPAR > ( (< IDENTIFICADOR > /*| dado()*/) (< SEPARADOR > (< IDENTIFICADOR > /*| dado()*/))* )* < RPAR > < FIMINSTRUCAO >
+}
+
+void stmt()://statement
+{}
+{
+	expressao() < FIMINSTRUCAO >
+}
+
+void condicional():
+{}
+{
+	< IF > < LPAR > expressao() < RPAR >
+	< INICIOBLOCO >
+		//LOOKAHEAD(1) 
+		(declaracaoVariavel() | repeticao() /*| stmt() */ )*
+	< FIMBLOCO >
+	(		< ELSE >
+		< INICIOBLOCO >
+			//LOOKAHEAD(1)
+			(declaracaoVariavel() | repeticao() /*| stmt() */)*
+		< FIMBLOCO >
+	)?
+}
+
+void repeticao():
+{}
+{
+  	/* EXEMPLO
+  	steins(a<0 gate a++) {
+  	  comandos
+    }
+    */
+		(		< FOR > < LPAR > (numero()|< IDENTIFICADOR >) < RPAR >
+		(		 	< INICIOBLOCO >
+		 		(		 		  comandos()
+		 		)*
+			< FIMBLOCO >
+		)?
+	)|//ou
+	(
+		< WHILE > < LPAR > (expressao())? <RPAR > /* se vazio == true */
+	    <INICIOBLOCO >
+	    	(
+	    	  comandos()	    	)*
+		< FIMBLOCO >	)
+}
+
+void expressao():
+{}
+{ 
+	(  	  (numero() | < IDENTIFICADOR >) (< OPERADOR_LOGICO > | < OPERADOR_ARITMETICO >) (numero() | < IDENTIFICADOR >))
+
+}
+
+void declaracaoVariavel():
+{}
+{
+  	/* atribuicao basica, tipo, int a = 2;  */
+	tipoDado() <IDENTIFICADOR > (< ATRIBUICAO > ( < CARACTERE >| numero() ) )? (< SEPARADOR > < IDENTIFICADOR > (< ATRIBUICAO > ( < CARACTERE >|numero()) )?)* <FIMINSTRUCAO >
+}
+
+void string(): 
+{}
+{
+	(< ISTRING >)(< CARACTERE > | < DIGITO >)*(< ISTRING >)
+}
+
+void numero():
+{}
+{
+	(< DIGITO >)+
+}
+
+void bool():
+{}
+{
+	< TRUE > | < FALSE >
+}
+
+/*void dado():
+{RecoverySet g = First.dado;}
+{
+  	try {
+		(numero() | string() | bool())
+	} catch (ParseException e) {
+		consumeUntil(g, e, "Principal");
+	}
+	
+	{
+		return jjtThis;
+	}
+}*/
+
+void tipoDado():
+{}
+{
+	< REAL >|< INTEIRO >|< LETRA >|< STRING >|< BOOLEAN >
+} 

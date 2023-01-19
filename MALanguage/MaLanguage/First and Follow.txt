@@ -1,0 +1,57 @@
+First:
+
+condicional: < IF >
+declaracaoVariavel: 	< REAL >, < INTEIRO >, < LETRA >, < STRING >, < BOOLEAN >
+repeticao:  < FOR >,  < WHILE >
+function:  < FUNCTION >
+expressao:  < IDENTIFICADOR >, < DIGITO >
+string:  < ISTRING >
+numero:  < DIGITO >
+bool: <TRUE>, <FALSE>
+comandos: < IF >, < REAL >, < INTEIRO >, < LETRA >, < STRING >, < BOOLEAN >, < FOR >,  < WHILE >, < FUNCTION >, < IDENTIFICADOR >, < DIGITO >
+stmt: < IDENTIFICADOR >, < DIGITO >
+dado: < DIGITO >, < STRING >, <TRUE>, <FALSE>
+tipoDado: < REAL >, < INTEIRO >, < LETRA >, < STRING >, < BOOLEAN >
+principal: < INICIOPROGRAMA >
+
+Follow:
+principal: $
+
+condicional:  < FIMBLOCO >, < IF >, < REAL >, < INTEIRO >, < LETRA >, < STRING >, < BOOLEAN >, < FOR >,  < WHILE >, < FUNCTION >, < IDENTIFICADOR >, < DIGITO >
+
+declaracaoVariavel: < FIMBLOCO >, < IF >, < REAL >, < INTEIRO >, < LETRA >, < STRING >, < BOOLEAN >, < FOR >,  < WHILE >, < FUNCTION >, < IDENTIFICADOR >, < DIGITO >, < FOR >, < WHILE >
+
+repeticao: < FIMBLOCO >, < IF >, < REAL >, < INTEIRO >, < LETRA >, < STRING >, < BOOLEAN >, < FOR >,  < WHILE >, < FUNCTION >, < IDENTIFICADOR >, < DIGITO >
+
+function: < LPAR >,  FIMBLOCO >, < IF >, < REAL >, < INTEIRO >, < LETRA >, < STRING >, < BOOLEAN >, < FOR >,  < WHILE >, < FUNCTION >, < IDENTIFICADOR >, < DIGITO >
+
+stmt: < FIMBLOCO >, < IF >, < REAL >, < INTEIRO >, < LETRA >, < STRING >, < BOOLEAN >, < FOR >,  < WHILE >, < FUNCTION >, < IDENTIFICADOR >, < DIGITO >
+
+
+comandos: < FIMBLOCO >, < IF >, < REAL >, < INTEIRO >, < LETRA >, < STRING >, < BOOLEAN >, < FOR >,  < WHILE >, < FUNCTION >, < IDENTIFICADOR >, < DIGITO >
+
+expressao:< FIMINSTRUCAO >, < RPAR >
+
+string: < SEPARADOR>, < RPAR >
+
+numero: < RPAR >, < OPERADOR_LOGICO >, < OPERADOR_ARITMETICO >, < SEPARADOR >, <FIMINSTRUCAO >
+
+bool: < SEPARADOR>, < RPAR >
+
+dado: < SEPARADOR>, < RPAR >
+
+tipoDado: <IDENTIFICADOR >
+
+
+First:
+
+condicional: moemoe
+declaracaoVariavel: yandere, kuudere, deredere, tsuntsun, tsundere
+repeticao: steins, ayaya
+function: bankai_
+expressao: tuturu_ , 0, 1, 2, 3, 4, 5, 6, 7, 8, 9
+string: '
+numero: 0, 1, 2, 3, 4, 5, 6, 7, 8, 9
+bool: redonda, plana
+dado: 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, ', redonda, plana
+tipoDado: yandere, kuudere, deredere, tsuntsun, tsundere, 
