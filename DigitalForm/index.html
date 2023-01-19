@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+    <head>
+
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="keywords" content="curriculo, digitaldoc,documentos,gestao de documentos">
+        <meta name="author" content="Levi Matheus">
+        <meta name="description" content="Envio de informações e curriculo">
+        <title>DigitalDoc - Currículos</title>
+
+        <!-- CSS -->
+        <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Roboto:400,100,300,500">
+        <link rel="stylesheet" href="assets/bootstrap/css/bootstrap.min.css">
+        <link rel="stylesheet" href="assets/font-awesome/css/font-awesome.min.css">
+		<link rel="stylesheet" href="assets/css/form-elements.css">
+        <link rel="stylesheet" href="assets/css/style.css">
+
+        <!-- Respond.js doesn't work if you view the page via file:// -->
+        <!--[if lt IE 9]>
+            <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+            <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+        <![endif]-->
+
+        <!-- Favicon and touch icons -->
+        <link rel="shortcut icon" href="assets/ico/16px.png">
+        <link rel="apple-touch-icon-precomposed" sizes="144x144" href="assets/ico/144px.png">
+        <link rel="apple-touch-icon-precomposed" sizes="114x114" href="assets/ico/114px.png">
+        <link rel="apple-touch-icon-precomposed" sizes="72x72" href="assets/ico/72px.png">
+        <link rel="apple-touch-icon-precomposed" sizes="57x57" href="assets/ico/57px.png">
+        <link rel="apple-touch-icon-precomposed" href="assets/ico/16px.png">
+    </head>
+
+    <body>
+		<!-- Top menu -->
+		<nav class="navbar navbar-inverse navbar-no-bg" role="navigation">
+			<div class="container">
+				<div class="navbar-header">
+					<button onclick="ocultar()" type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#top-navbar-1">
+						<span class="sr-only">Navegação</span>
+						<span class="icon-bar"></span>
+						<span class="icon-bar"></span>
+						<span class="icon-bar"></span>
+					</button>
+					<a class="navbar-brand" href="index.html">DigitalDoc</a>
+				</div>
+				<!-- Collect the nav links, forms, and other content for toggling -->
+				<div id="menusociais" class="collapse navbar-collapse" id="top-navbar-1">
+					<ul class="nav navbar-nav navbar-right">
+						<li>
+							<span class="li-social">
+								<a href="https://www.facebook.com/digitaldocbr" target="_blank"><i class="fa fa-facebook"></i></a> 
+								<a href="https://twitter.com/digitaldocbr" target="_blank"><i class="fa fa-twitter"></i></a> 
+								<a href="https://www.linkedin.com/company/digitaldoc" target="_blank"><i class="fa fa-linkedin"></i></a>
+							</span>
+						</li>
+					</ul>
+				</div>
+			</div>
+		</nav>
+
+        <!-- Top content -->
+        <div class="top-content">
+            <div class="container">
+                
+                <div class="row">
+                    <div class="col-sm-8 col-sm-offset-2 text">
+                        <h1><strong>DigitalDoc</strong></h1>
+                        <div class="description">
+                       	    <p>
+                                Envie seu currículo
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div ng-app="envioDados" ng-controller="candidatos" class="row">
+                    <div class="col-sm-10 col-sm-offset-1 col-md-8 col-md-offset-2 col-lg-6 col-lg-offset-3 form-box">
+                    	<form ng-submit="addCandidato()" ng-controller="candidatos" name="fileinfo" role="form" method="post" class="f1" id="f1"  enctype="multipart/form-data">
+                    		<h3>Informações</h3>
+                    		<p>Preencha todos os campos</p>
+                    		<div class="f1-steps">
+                    			<div class="f1-progress">
+                    			    <div class="f1-progress-line" data-now-value="16.66" data-number-of-steps="3" style="width: 16.66%;"></div>
+                    			</div>
+                    			<div class="f1-step active">
+                    				<div class="f1-step-icon"><i class="fa fa-user"></i></div>
+                    				<p>Dados</p>
+                    			</div>
+                                <div class="f1-step">
+                    				<div class="f1-step-icon"><i class="fa fa-linkedin"></i></div>
+                    				<p>Sociais</p>
+                    			</div>
+                    			<div class="f1-step">
+                    				<div class="f1-step-icon"><i class="fa fa-file"></i></div>
+                    				<p>Currículo</p>
+                    			</div>
+                    		</div>
+                    		
+                    		<fieldset>
+                                <h4>Seus dados:</h4>
+                    			<div class="form-group">
+                    			    <label class="sr-only" for="f1-first-name">Nome</label>
+                                    <input ng-model="cNome" onkeypress='validate(event)' maxlength="50" type="text" name="f1-first-name" placeholder="Nome..." class="f1-first-name form-control" id="f1-first-name">
+                                </div>
+                                <div class="form-group">
+                                    <label class="sr-only" for="f1-last-name">Sobrenome</label>
+                                    <input ng-model="cSobrenome" onkeypress='validate(event)' maxlength="50" type="text" name="f1-last-name" placeholder="Sobrenome..." class="f1-last-name form-control" id="f1-last-name">
+                                </div>
+                                <div class="form-group">
+                                    <label class="sr-only" for="f1-email">Email</label>
+                                    <input  ng-model="cEmail" type="email" name="myAddress" ng-model="text" placeholder="Email..." class="f1-email form-control"
+                                    id="f1-email">
+                                    <span id="mailvalid" ng-show="fileinfo.myAddress.$error.email">Email inválido !</span>
+                                </div>
+                                <div class="form-group">
+                                    <label class="sr-only" for="f1-phone">Celular</label>
+                                    <input ng-model="cCelular" data-mask="(00) 00000-0000" type="text" name="f1-phone" placeholder="Celular" class="f1-phone form-control" id="f1-phone">
+                                </div>
+                                <div class="f1-buttons">
+                                    <button type="button" class="btn btn-next" id="nextEnter1">Próximo</button>
+                                </div>
+                            </fieldset>
+                            
+                            <fieldset>
+                                <h4>Perfil nas redes sociais:</h4>
+                                <h6>Insira o seu nome nas redes sociais</h6>
+                                <div class="form-group">
+                                    <label class="sr-only" for="f1-facebook">Facebook</label>
+                                    <input ng-model="cFacebook" type="text" name="f1-facebook" placeholder="Facebook..." class="f1-facebook form-control" id="f1-facebook">
+                                </div>
+                                <div class="form-group">
+                                    <label class="sr-only" for="f1-twitter">Twitter</label>
+                                    <input ng-model="cTwitter" type="text" name="f1-twitter" placeholder="Twitter..." class="f1-twitter form-control" id="f1-twitter">
+                                </div>
+                                <div class="form-group">
+                                    <label class="sr-only" for="f1-linkedin">Linkedin</label>
+                                    <input ng-model="cLinkedin" type="text" name="f1-linkedin" placeholder="Linkedin..." class="f1-linkedin form-control" id="f1-linkedin">
+                                </div>
+                                <div class="f1-buttons">
+                                    <button type="button" class="btn btn-previous">Anterior</button>
+                                    <button type="button" class="btn btn-next" id="nextEnter2">Próximo</button>
+                                </div>
+                            </fieldset>
+
+                            <fieldset>
+                                <h4>Currículo</h4>
+                                <h6>Arquivo com tamanho menor que 20MB</h6>
+                                <div class="form-group">
+                                    <div class="input-group col-xs-12">
+                                        <input fileread="arq" files-input ng-model="cArquivo" type="file" name="arquivo" id="input1" class="filestyle" accept=".doc, .docx, .txt, .pdf" required>
+                                    </div>
+                                </div>
+                                <div class="f1-buttons">
+                                    <button type="button" class="btn btn-previous">Anterior</button>
+                                    <!--<button type="button" class="btn btn-submit" onclick="enviar()">Enviar</button>-->
+                                    <button type="submit" class="btn btn-submit">Enviar</button>
+                                </div>
+                            </fieldset>
+                            <div id="loading" class="modal" style="z-index: 300;">
+                                <div class="modal-content">
+                                    <span class="close">&times;</span>
+                                    <img src="assets\img\Spinner.gif">
+                                    <p>As suas informações estão sendo enviadas, por favor, aguarde...</p>
+                                </div> 
+                            </div>
+                            <div id="ok" class="modal" style="z-index: 300;">
+                                <div class="modal-content">
+                                    <span class="close">&times;</span>
+                                    <img src="assets\img\success.png">
+                                    <p>Informações enviadas com sucesso.</p>
+                                </div>
+                            </div>
+                            <div id="error" class="modal" style="z-index: 300;">
+                                <div class="modal-content">
+                                    <span class="close">&times;</span>
+                                    <img src="assets\img\error.png">
+                                    <p>Ops, encontramos um erro, por favor, tente novamente !</p>
+                                </div>
+                            </div>
+                            <div id="file" class="modal" style="z-index: 300;">
+                                <div class="modal-content">
+                                    <span class="close">&times;</span>
+                                    <img src="assets\img\doc.png">
+                                    <img src="assets\img\docx.png">
+                                    <img src="assets\img\pdf.png">
+                                    <img src="assets\img\txt.png">
+                                    <p>Por favor, selecione um arquivo com menos de 20MB e com as extensões suportadas.</p>
+                                </div>
+                            </div>
+                    	</form>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <!-- Javascript -->
+        <script src="http://code.jquery.com/jquery-1.11.3.min.js"></script>
+        <script src="assets/bootstrap/js/bootstrap.min.js"></script>
+        <!--<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>-->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.0/jquery.js"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.6/angular.js"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.6/angular-route.js"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.6/angular-resource.js"></script>
+        <script type="text/javascript" src="assets/js/jquery.mask.js"></script>
+        
+        <script src="assets/js/jquery.backstretch.min.js"></script>
+        <script src="assets/js/retina-1.1.0.min.js"></script>
+        <script src="assets/js/scripts.js"></script>
+        <script src="assets/js/envio.js"></script>
+        <script src="assets/js/main.js"></script>
+        <script type="text/javascript" src="assets/js/bootstrap-filestyle.min.js"></script>
+        <script type="text/javascript" src="assets/js/bootstrap-filestyle.js"></script>
+        
+        <!--[if lt IE 10]>
+            <script src="assets/js/placeholder.js"></script>
+        <![endif]-->
+
+    </body>
+
+</html>

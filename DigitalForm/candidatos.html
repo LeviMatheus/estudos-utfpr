@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+    <head>
+
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="keywords" content="curriculo, digitaldoc,documentos,gestao de documentos">
+        <meta name="author" content="Levi Matheus">
+        <meta name="description" content="Envio de informações e curriculo">
+        <title>DigitalDoc - Currículos</title>
+
+        <!-- CSS -->
+        <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Roboto:400,100,300,500">
+        <link rel="stylesheet" href="assets/bootstrap/css/bootstrap.min.css">
+        <link rel="stylesheet" href="assets/font-awesome/css/font-awesome.min.css">
+		<link rel="stylesheet" href="assets/css/form-elements.css">
+        <link rel="stylesheet" href="assets/css/stylecandidato.css">
+
+        <!-- Respond.js doesn't work if you view the page via file:// -->
+        <!--[if lt IE 9]>
+            <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+            <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+        <![endif]-->
+
+        <!-- ICONES -->
+        <link rel="shortcut icon" href="assets/ico/16px.png">
+        <link rel="apple-touch-icon-precomposed" sizes="144x144" href="assets/ico/144px.png">
+        <link rel="apple-touch-icon-precomposed" sizes="114x114" href="assets/ico/114px.png">
+        <link rel="apple-touch-icon-precomposed" sizes="72x72" href="assets/ico/72px.png">
+        <link rel="apple-touch-icon-precomposed" sizes="57x57" href="assets/ico/57px.png">
+        <link rel="apple-touch-icon-precomposed" href="assets/ico/16px.png">
+    </head>
+
+    <body>
+		<!-- BARRA -->
+		<nav class="navbar navbar-inverse navbar-no-bg" role="navigation">
+			<div class="container">
+				<div class="navbar-header">
+					<a class="navbar-brand" href="index.html">DigitalDoc</a>
+				</div>
+			</div>
+		</nav>
+        
+        <!-- MODALS -->
+        <div id="loading" class="modal" style="z-index: 300;">
+            <div class="modal-content">
+                <span class="close">&times;</span>
+                <img src="assets\img\Spinner.gif">
+                <p>Carregando, por favor, aguarde...</p>
+            </div> 
+        </div>
+        <div id="error" class="modal" style="z-index: 300;">
+            <div class="modal-content">
+                <span class="close">&times;</span>
+                <img src="assets\img\error.png">
+                <p>Ooh, encontramos um erro, por favor, tente novamente !</p>
+            </div>
+        </div>
+        <div id="download" class="modal" style="z-index: 300;">
+            <div class="modal-content">
+                <span class="close">&times;</span>
+                <img src="assets\img\download.png">
+                <p>Aguarde o início do download</p>
+            </div>
+        </div>
+
+        <!-- CONTEUDO -->
+        <div class="top-content">
+            <div class="container">
+                <div class="row">
+                    <div class="col-sm-8 col-sm-offset-2 text">
+                        <h1><strong>Candidatos</strong></h1>
+                    </div>
+                </div>
+                <!-- APLICATIVO -->
+                <div class="row">
+                    <div class="col-md-12 text" ng-app="candidatos" ng-controller="buscarCandidatos">
+                        <div class="row">
+                            <!-- paginação -->
+                            <div class="itens">
+                                <dir-pagination-controls
+                                   max-size="20"
+                                   direction-links="false"
+                                   boundary-links="true" >
+                                </dir-pagination-controls>
+                            </div>
+                        </div>
+                        <div class="border_style">
+                            <form class="form-inline">
+                                <div class="form-group">
+                                    <label id="search">Procurar</label>
+                                    <input id="ipt_search" type="text" ng-model="search" class="form-control" placeholder="">
+                                </div>
+                            </form>
+                        </div>
+                        <div class="table-responsive">
+                            <table class="table">
+                                <tr>
+                                    <!--LEGENDAS-->
+                                    <td  class="cl_legenda" ng-click="sort('id')">
+                                        <p>ID</p>
+                                        <span class="glyphicon sort-icon" ng-show="sortKey=='id'" ng-model="cID" ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+                                    </td>
+                                    <td  class="cl_legenda" ng-click="sort('nome')">
+                                        <p>Nome</p>
+                                        <span class="glyphicon sort-icon" ng-show="sortKey=='nome'" ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+                                    </td>
+                                    <td class="cl_legenda" ng-click="sort('sobrenome')">
+                                        <p>Sobrenome</p>
+                                        <span class="glyphicon sort-icon" ng-show="sortKey=='sobrenome'" ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+                                    </td>
+                                    <td  class="cl_legenda" ng-click="sort('celular')">
+                                        <p>Celular</p>
+                                        <span class="glyphicon sort-icon" ng-show="sortKey=='celular'" ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+                                    </td>
+                                    <td  class="cl_legenda" ng-click="sort('email')">
+                                        <p>Email</p>
+                                        <span class="glyphicon sort-icon" ng-show="sortKey=='email'" ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+                                    </td>
+                                    <td  class="cl_legenda" ng-click="sort('facebook')">
+                                        <p>Facebook</p>
+                                        <span class="glyphicon sort-icon" ng-show="sortKey=='facebook'" ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+                                    </td>
+                                    <td  class="cl_legenda" ng-click="sort('twitter')">
+                                        <p>Twitter</p>
+                                        <span class="glyphicon sort-icon" ng-show="sortKey=='twitter'" ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+                                    </td>
+                                    <td  class="cl_legenda" ng-click="sort('linkedin')">
+                                        <p>Linkedin</p>
+                                        <span class="glyphicon sort-icon" ng-show="sortKey=='linkedin'" ng-class="{'glyphicon-chevron-up':reverse,'glyphicon-chevron-down':!reverse}"></span>
+                                    </td>
+                                    <td  class="cl_legenda">
+                                        <p>Currículo</p>
+                                    </td>
+                                </tr>
+                                <!-- candidatos // itens por pagina -->
+                                <tr dir-paginate="candidato in candidatos|orderBy:sortKey:reverse|filter:search|itemsPerPage:20">
+                                    <td class="conteudo">
+                                        <p>{{candidato.id}}</p>
+                                    </td>
+                                    <td  class="conteudo">
+                                        <p>{{candidato.nome}}</p>
+                                    </td>
+                                    <td class="conteudo">
+                                        <p>{{candidato.sobrenome}}</p>
+                                    </td>
+                                    <td class="conteudo">
+                                        <p>{{candidato.celular}}</p>
+                                    </td>
+                                    <td class="conteudo">
+                                        <p>{{candidato.email}}</p>
+                                    </td>
+                                    <td class="conteudo">
+                                        <p>{{candidato.facebook}}</p>
+                                    </td>
+                                    <td class="conteudo">
+                                        <p>{{candidato.twitter}}</p>
+                                    </td>
+                                    <td class="conteudo">
+                                        <p>{{candidato.linkedin}}</p>
+                                    </td>
+                                    <td class="conteudo">
+                                        <p>{{candidato.fname}}.{{candidato.fext}}</p>
+                                        <p ng-controller="download">
+                                            <button class="btn btn-info" ng-click="downloadFiles(candidato)">DOWNLOAD</button>
+                                        </p>
+                                        <p ng-controller="deleteCandidatos">
+                                            <button class="btn btn-info" ng-click="deletar(candidato)">DELETAR</button>
+                                        </p>
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <!-- Javascript -->
+        <script src="http://code.jquery.com/jquery-1.11.3.min.js"></script>
+        <script src="assets/bootstrap/js/bootstrap.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.0/jquery.js"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.6/angular.js"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.6/angular-route.js"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.6/angular-resource.js"></script>
+        <script type="text/javascript" src="assets/js/jquery.mask.js"></script>
+        <script type="text/javascript" src="assets/js/dirPagination.js"></script>
+        
+        <script src="assets/js/jquery.backstretch.min.js"></script>
+        <script src="assets/js/retina-1.1.0.min.js"></script>
+        <script src="assets/js/scripts.js"></script>
+        <script src="assets/js/busca.js"></script>
+        
+        <!--[if lt IE 10]>
+            <script src="assets/js/placeholder.js"></script>
+        <![endif]-->
+
+    </body>
+
+</html>
