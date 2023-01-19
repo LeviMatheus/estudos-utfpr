@@ -1,0 +1,101 @@
+/* .nav_kabum {
+    background-color:#0060b1;
+} */
+
+:root {
+    --preto-principal: #161616;
+    --azul-principal: #0060b1;
+    --branco-principal: white;
+    --vermelho-principal: red;
+    --laranja-principal: #ff6500;
+    --cinza-principal:#fafafb;
+    --roxo-principal:#6a11cb;
+}
+
+#nav_principal{
+    background-color: var(--azul-principal)!important;
+}
+
+#link_nav{
+    font-weight: bold;
+    color:var(--branco-principal);
+}
+
+#lista_100{
+    width:100%;
+}
+
+#nav_logout{
+    font-weight: bold;
+    color:var(--vermelho-principal);
+}
+
+.div_principal{
+    background-color:var(--preto-principal);
+}
+
+.header_destaque{
+    margin:0px;
+    text-transform: uppercase;
+    padding:10px;
+    text-align: left;
+    font-weight: bold;
+    color:var(--branco-principal);
+    background-color: var(--laranja-principal);
+    border-radius: 2px 2px 0 0;
+}
+
+.div_secundaria{
+    background-color: var(--branco-principal);
+}
+
+.form_cadastro{
+    padding:1%;
+}
+
+.label_cadastro{
+    font-weight: bold;
+    text-transform: uppercase;
+    color:var(--azul-principal);
+}
+
+.texto_botao{
+    font-weight: bold;
+    text-transform: uppercase;
+    color:var(--branco-principal);
+    background-color: var(--azul-principal);
+}
+
+.login_fundo {
+    background: url("../img/login.png");
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    position: relative;
+    background-color: var(--azul-principal);
+    height: 100vh;
+}
+
+.titulo_login{
+    font-weight: bold;
+    text-transform: uppercase;
+    color:var(--laranja-principal);
+}
+
+.label_login{
+    font-weight: bold;
+    text-transform: uppercase;
+    color:var(--azul-principal);
+}
+
+.div_login{
+    text-align: left;
+}
+
+.btn-block{
+    width: 100%;
+}
+
+#perdeu_senha{
+    text-align: right;
+}
